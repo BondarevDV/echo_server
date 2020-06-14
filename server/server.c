@@ -84,7 +84,7 @@ int main(){
 		socklen_t addr_len = sizeof addr;	
 		int  file_descriptor = Accept(Server,( struct sockaddr *) &addr, &addr_len);
 		ssize_t nread;
-		char buf[236];
+		char buf[1024];
 
 		nread = read(file_descriptor, buf, 256);
 		if (nread == -1){
@@ -94,9 +94,11 @@ int main(){
 
 
 
-		write(STDOUT_FILENO, buf, nread);
-		write(file_descriptor, buf, nread);
+		int res = write(STDOUT_FILENO, buf, nread);
+		res = write(file_descriptor, buf, nread);
 
+		if (res == -1)
+		 printf("fail write in file decriptor...");
 		close(file_descriptor);
 	}
 	return 0;

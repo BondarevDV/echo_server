@@ -1,9 +1,18 @@
 cmake_minimum_required(VERSION 2.8) # Проверка версии CMake.
 
-set(dir "${CMAKE_CURRENT_SOURCE_DIR}/RELEASE")
+project(server_tcp)
 
+set(CMAKE_BUILD_TYPE Release)
 
-set(CMAKE_BUILD_DIRECTORY ${dir})
+#add_definitions(-Wall -o2)
 
-include_directories(lib)
-add_executable(bdv_server server.c erproc.c)	
+include_directories(${PROJECT_SOURCE_DIR}/../include)
+
+file( GLOB 
+	   CS "../src/*.c")
+
+set(SOURCES  ${CS}  server.c )
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+
+add_executable(${PROJECT_NAME} ${SOURCES})	
